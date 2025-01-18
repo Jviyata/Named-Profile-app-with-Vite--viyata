@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Shop Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #6b4f47;
+        }
+        .menu-item {
+            padding: 15px;
+            margin: 10px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+        #menu-container {
+            list-style-type: none;
+            padding: 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #6b4f47;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #9a6e5f;
+        }
+    </style>
+</head>
+<body>
+    <h1>Our Coffee Menu</h1>
+    <button id="delete-all">Remove All Coffee Items</button>
+    <button id="delete-one">Remove One Coffee Item</button>
+    <ul id="menu-container"></ul>
+
+    <script>
+        const menuItems = ["Espresso", "Americano", "Cappuccino", "Latte", "Mocha", "Macchiato", "Flat White"];
+        
+        function randomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        const menuContainer = document.getElementById("menu-container");
+
+        menuItems.forEach(item => {
+            const li = document.createElement("li");
+            li.classList.add("menu-item");
+            li.textContent = item;
+            li.style.backgroundColor = randomColor();
+            menuContainer.appendChild(li);
+        });
+
+        document.getElementById("delete-all").addEventListener("click", function() {
+            menuContainer.innerHTML = '';
+            this.textContent = "No Coffee Items Left";
+        });
+
+        document.getElementById("delete-one").addEventListener("click", function() {
+            if (menuContainer.children.length > 0) {
+                menuContainer.removeChild(menuContainer.lastChild);
+            }
+        });
+    </script>
+</body>
+</html>
