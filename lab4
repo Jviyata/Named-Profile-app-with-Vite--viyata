@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile App</title>
+  <style>
+    /* CSS styles for the profile app */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrapper {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      width: 200px;
+      text-align: center;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+
+    .card p {
+      font-size: 1em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React and Babel Script for JSX support -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.18.10/babel.min.js"></script>
+
+  <script type="text/babel">
+    // Card Component
+    const Card = ({ name, image, bio }) => {
+      return (
+        <div className="card">
+          <img src={image} alt={name} />
+          <h3>{name}</h3>
+          <p>{bio}</p>
+        </div>
+      );
+    };
+
+    // Wrapper Component
+    const Wrapper = ({ children }) => {
+      return <div className="wrapper">{children}</div>;
+    };
+
+    // ProfileApp Component
+    const ProfileApp = () => {
+      const profiles = [
+        { name: 'John Doe', image: 'https://via.placeholder.com/100', bio: 'Software Engineer' },
+        { name: 'Jane Smith', image: 'https://via.placeholder.com/100', bio: 'Graphic Designer' },
+        { name: 'Sam Lee', image: 'https://via.placeholder.com/100', bio: 'Data Scientist' }
+      ];
+
+      return (
+        <Wrapper>
+          {profiles.map((profile, index) => (
+            <Card
+              key={index}
+              name={profile.name}
+              image={profile.image}
+              bio={profile.bio}
+            />
+          ))}
+        </Wrapper>
+      );
+    };
+
+    // Render the ProfileApp to the root div
+    ReactDOM.render(<ProfileApp />, document.getElementById('root'));
+  </script>
+</body>
+</html>
