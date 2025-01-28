@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile App</title>
+    <style>
+        body {
+            font-family: Helvetica, sans-serif; /* Only Helvetica font */
+            text-align: center;
+            background-color: #fcf8f5; 
+            margin: 0;
+            padding: 0;
+            color: black; 
+        }
+
+        .navbar {
+            background-color: #8aa6ba;
+            padding: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar h2 {
+            color: black; /* Navbar title color */
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            margin: 50px auto;
+            max-width: 800px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .profile-card {
+            background: #f2e9e1; 
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            text-align: center;
+            display: none; /* Initially hide all profiles */
+        }
+
+        .profile-card img {
+            width: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .profile-card h3 {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        .profile-card p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: gray; /* Profile text color */
+        }
+
+        .profile-card p.email {
+            color: blue; /* Email text in blue */
+        }
+
+        .profile-card p.role {
+            font-style: italic; /* Role title in italics */
+        }
+
+        input[type="text"] {
+            padding: 8px; /* Smaller search bar */
+            width: 40%; /* Reduced width */
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px; /* Spacing between search and reset button */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #cad7eb;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h2>Profile App</h2>
+    </div>
+
+    <div class="container">
+        <p>This is a simple profile app.</p>
+        <h3>About</h3>
+
+        <div class="controls">
+            <p>Select a role: 
+                <select id="roleSelect" onchange="filterProfiles()">
+                    <option value="all">All</option>
+                    <option value="Software Engineer">Software Engineer</option>
+                    <option value="UX Designer">UX Designer</option>
+                    <option value="Web Developer">Web Developer</option>
+                    <option value="Graphic Designer">Graphic Designer</option>
+                </select>
+            </p>
+
+            <input type="text" id="searchInput" placeholder="Search by name..." oninput="filterProfiles()">
+
+            <button onclick="resetFilters()">Reset</button>
+        </div>
+
+        <div class="profile-container">
+            <!-- Software Engineers -->
+            <div class="profile-card" data-role="Software Engineer">
+                <img src="PROFILEM.JPG" alt="John Doe">
+                <h3>John Doe</h3>
+                <p class="role">Software Engineer</p>
+                <p class="email"> john.doe@example.com</p>
+            </div>
+
+            <div class="profile-card" data-role="Software Engineer">
+                <img src="PROFILEW.JPG" alt="Ava Thompson">
+                <h3>Ava Thompson</h3>
+                <p class="role">Software Engineer</p>
+                <p class="email"> ava.thompson@example.com</p>
+            </div>
+
+            <!-- UX Designers -->
+            <div class="profile-card" data-role="UX Designer">
+                <img src="PROFILEW.JPG" alt="Emma Williams">
+                <h3>Emma Williams</h3>
+                <p class="role">UX Designer</p>
+                <p class="email"> emma.williams@example.com</p>
+            </div>
+
+            <div class="profile-card" data-role="UX Designer">
+                <img src="PROFILEM.JPG" alt="Ryan Carter">
+                <h3>Ryan Carter</h3>
+                <p class="role">UX Designer</p>
+                <p class="email"> ryan.carter@example.com</p>
+            </div>
+
+            <!-- Web Developers -->
+            <div class="profile-card" data-role="Web Developer">
+                <img src="PROFILEM.JPG" alt="Liam Brown">
+                <h3>Liam Brown</h3>
+                <p class="role">Web Developer</p>
+                <p class="email"> liam.brown@example.com</p>
+            </div>
+
+            <div class="profile-card" data-role="Web Developer">
+                <img src="PROFILEW.JPG" alt="Sophia Lee">
+                <h3>Sophia Lee</h3>
+                <p class="role">Web Developer</p>
+                <p class="email"> sophia.lee@example.com</p>
+            </div>
+
+            <!-- Graphic Designers -->
+            <div class="profile-card" data-role="Graphic Designer">
+                <img src="PROFILEW.JPG" alt="Olivia Garcia">
+                <h3>Olivia Garcia</h3>
+                <p class="role">Graphic Designer</p>
+                <p class="email">olivia.garcia@example.com</p>
+            </div>
+
+            <div class="profile-card" data-role="Graphic Designer">
+                <img src="PROFILEM.JPG" alt="Michael Adams">
+                <h3>Michael Adams</h3>
+                <p class="role">Graphic Designer</p>
+                <p class="email"> michael.adams@example.com</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterProfiles() {
+            let selectedRole = document.getElementById("roleSelect").value;
+            let searchTerm = document.getElementById("searchInput").value.toLowerCase();
+            let profiles = document.querySelectorAll(".profile-card");
+
+            profiles.forEach(profile => {
+                let profileName = profile.querySelector("h3").textContent.toLowerCase();
+                let profileRole = profile.getAttribute("data-role");
+
+                if ((selectedRole === "all" || profileRole === selectedRole) &&
+                    (profileName.includes(searchTerm))) {
+                    profile.style.display = "block";
+                } else {
+                    profile.style.display = "none";
+                }
+            });
+        }
+
+        function resetFilters() {
+            document.getElementById("roleSelect").value = "all";
+            document.getElementById("searchInput").value = "";
+            filterProfiles();
+        }
+
+        // Show all profiles on page load
+        window.onload = filterProfiles;
+    </script>
+
+</body>
+</html>
