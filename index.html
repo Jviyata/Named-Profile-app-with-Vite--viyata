@@ -6,12 +6,12 @@
     <title>Profile App</title>
     <style>
         body {
-            font-family: Helvetica, sans-serif; /* Only Helvetica font */
+            font-family: Helvetica, sans-serif;
             text-align: center;
-            background-color: #fcf8f5; 
+            background-color: #fcf8f5;
             margin: 0;
             padding: 0;
-            color: black; 
+            color: black;
         }
 
         .navbar {
@@ -21,7 +21,7 @@
         }
 
         .navbar h2 {
-            color: black; /* Navbar title color */
+            color: black;
             font-size: 24px;
             font-weight: bold;
         }
@@ -47,13 +47,13 @@
         }
 
         .profile-card {
-            background: #f2e9e1; 
+            background: #f2e9e1;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 200px;
             text-align: center;
-            display: none; /* Initially hide all profiles */
+            display: none;
         }
 
         .profile-card img {
@@ -70,24 +70,24 @@
         .profile-card p {
             margin: 5px 0;
             font-size: 14px;
-            color: gray; /* Profile text color */
+            color: gray;
         }
 
         .profile-card p.email {
-            color: blue; /* Email text in blue */
+            color: blue;
         }
 
         .profile-card p.role {
-            font-style: italic; /* Role title in italics */
+            font-style: italic;
         }
 
         input[type="text"] {
-            padding: 8px; /* Smaller search bar */
-            width: 40%; /* Reduced width */
+            padding: 8px;
+            width: 40%;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            margin-right: 10px; /* Spacing between search and reset button */
+            margin-right: 10px;
         }
 
         button {
@@ -139,9 +139,8 @@
         </div>
 
         <div class="profile-container">
-            <!-- Software Engineers -->
             <div class="profile-card" data-role="Software Engineer">
-                <img src="PROFILEM.JPG" alt="John Doe">
+                <img src="PROFILEM.jpg" alt="John Doe">
                 <h3>John Doe</h3>
                 <p class="role">Software Engineer</p>
                 <p class="email"> john.doe@example.com</p>
@@ -154,7 +153,6 @@
                 <p class="email"> ava.thompson@example.com</p>
             </div>
 
-            <!-- UX Designers -->
             <div class="profile-card" data-role="UX Designer">
                 <img src="PROFILEW.JPG" alt="Emma Williams">
                 <h3>Emma Williams</h3>
@@ -169,7 +167,6 @@
                 <p class="email"> ryan.carter@example.com</p>
             </div>
 
-            <!-- Web Developers -->
             <div class="profile-card" data-role="Web Developer">
                 <img src="PROFILEM.JPG" alt="Liam Brown">
                 <h3>Liam Brown</h3>
@@ -182,21 +179,6 @@
                 <h3>Sophia Lee</h3>
                 <p class="role">Web Developer</p>
                 <p class="email"> sophia.lee@example.com</p>
-            </div>
-
-            <!-- Graphic Designers -->
-            <div class="profile-card" data-role="Graphic Designer">
-                <img src="PROFILEW.JPG" alt="Olivia Garcia">
-                <h3>Olivia Garcia</h3>
-                <p class="role">Graphic Designer</p>
-                <p class="email">olivia.garcia@example.com</p>
-            </div>
-
-            <div class="profile-card" data-role="Graphic Designer">
-                <img src="PROFILEM.JPG" alt="Michael Adams">
-                <h3>Michael Adams</h3>
-                <p class="role">Graphic Designer</p>
-                <p class="email"> michael.adams@example.com</p>
             </div>
         </div>
     </div>
@@ -226,7 +208,6 @@
             filterProfiles();
         }
 
-        // Show all profiles on page load
         window.onload = filterProfiles;
     </script>
 
