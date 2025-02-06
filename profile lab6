@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- Load React and ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- Load Babel for JSX transpilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      body {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
+      form {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      input, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function ProfileForm() {
+        const [formData, setFormData] = React.useState({
+          name: "",
+          title: "",
+          email: "",
+          bio: "",
+        });
+
+        const handleChange = (e) => {
+          const { name, value } = e.target;
+          setFormData({ ...formData, [name]: value });
+        };
+
+        const handleSubmit = async (e) => {
+          e.preventDefault();
+          const response = await fetch("php/handleProfileForm.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+
+          const result = await response.json();
+          alert(result.message);
+        };
+
+        return (
+          <form onSubmit={handleSubmit}>
+            <label>
+              Name:
+              <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+            </label>
+            <label>
+              Title:
+              <input type="text" name="title" value={formData.title} onChange={handleChange} required />
+            </label>
+            <label>
+              Email:
+              <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+            </label>
+            <label>
+              Bio:
+              <textarea name="bio" value={formData.bio} onChange={handleChange} required></textarea>
+            </label>
+            <button type="submit">Submit</button>
+          </form>
+        );
+      }
+
+      ReactDOM.render(<ProfileForm />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
