@@ -1,0 +1,61 @@
+<?php
+// Database connection
+$host = 'localhost'; // Database host
+$username = 'root'; // Database username
+$password = ''; // Database password
+$dbname = 'profiles_db'; // Your database name
+
+$conn = new mysqli($host, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Set the number of profiles per page
+$profiles_per_page = 10;
+
+// Get the current page from the URL, if available (defaults to 1)
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+// Calculate the starting record for the SQL query
+$start_from = ($page - 1) * $profiles_per_page;
+
+// Fetch the profiles for the current page
+$sql = "SELECT * FROM profiles LIMIT $start_from, $profiles_per_page";
+$result = $conn->query($sql);
+
+// Fetch total number of profiles for pagination
+$total_sql = "SELECT COUNT(*) AS total_profiles FROM profiles";
+$total_result = $conn->query($total_sql);
+$total_row = $total_result->fetch_assoc();
+$total_profiles = $total_row['total_profiles'];
+
+// Calculate total pages
+$total_pages = ceil($total_profiles / $profiles_per_page);
+
+// Output the fetched profiles (optional, for testing purposes)
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo "Name: " . $row["name"] . "<br>";
+        echo "Email: " . $row["email"] . "<br>";
+        echo "<hr>";
+    }
+} else {
+    echo "No profiles found.";
+}
+
+// Display pagination controls
+if ($page > 1) {
+    echo "<a href='fetch_data.php?page=" . ($page - 1) . "'>Previous</a> ";
+}
+
+for ($i = 1; $i <= $total_pages; $i++) {
+    echo "<a href='fetch_data.php?page=" . $i . "'>" . $i . "</a> ";
+}
+
+if ($page < $total_pages) {
+    echo "<a href='fetch_data.php?page=" . ($page + 1) . "'>Next</a>";
+}
+
+$conn->close();
+?>
