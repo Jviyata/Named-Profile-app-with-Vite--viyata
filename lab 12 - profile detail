@@ -1,0 +1,28 @@
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
+const ProfileDetail = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      // Fetch profile data (replace with API call)
+      setProfile({ id, name: "John Doe", email: "john@example.com" });
+    }
+  }, [id]);
+
+  if (!profile) return <p>Loading...</p>;
+
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold">{profile.name}</h1>
+      <p className="text-gray-600">{profile.email}</p>
+      <Link href={`/profile/${id}/edit`} className="text-blue-500">Edit Profile</Link>
+    </div>
+  );
+};
+
+export default ProfileDetail;
