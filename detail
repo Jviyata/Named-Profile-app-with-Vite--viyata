@@ -1,0 +1,35 @@
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+
+const EditProfile = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    // Update profile API call
+    alert('Profile updated successfully!');
+  };
+
+  const handleDelete = () => {
+    // Delete API call
+    alert('Profile deleted.');
+    router.push('/');
+  };
+
+  return (
+    <div className="p-6">
+      <h1 className="text-xl font-bold">Edit Profile</h1>
+      <form onSubmit={handleUpdate} className="mt-4">
+        <input className="border p-2 w-full mb-2" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
+        <input className="border p-2 w-full mb-2" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2">Update</button>
+      </form>
+      <button onClick={handleDelete} className="bg-red-500 text-white px-4 py-2 mt-4">Delete Profile</button>
+    </div>
+  );
+};
+
+export default EditProfile;
