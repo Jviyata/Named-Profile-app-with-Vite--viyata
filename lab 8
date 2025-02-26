@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+</head>
+<body>
+    <h2>Upload an Image</h2>
+    <form action="" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit" name="submit">Upload</button>
+    </form>
+
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
+        $target_dir = "uploads/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0755, true);
+        }
+
+        $target_file = $target_dir . basename($_FILES["image"]["name"]);
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $uploadOk = 1;
+        $error_message = "";
+
+        // Check if file is an image
+        $check = getimagesize($_FILES["image"]["tmp_name"]);
+        if ($check === false) {
+            $error_message = "File is not an image.";
+            $uploadOk = 0;
+        }
+
+        // Allow only certain file types
+        $allowed_types = ["jpg", "jpeg", "png", "gif"];
+        if (!in_array($imageFileType, $allowed_types)) {
+            $error_message = "Only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+
+        // Check file size (limit: 2MB)
+        if ($_FILES["image"]["size"] > 2000000) {
+            $error_message = "File is too large. Maximum size: 2MB.";
+            $uploadOk = 0;
+        }
+
+        // Upload file if all checks pass
+        if ($uploadOk == 1) {
+            if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                echo "<p style='color: green;'>File uploaded: " . htmlspecialchars(basename($_FILES["image"]["name"])) . "</p>";
+                echo "<img src='$target_file' width='200' alt='Uploaded Image'>";
+            } else {
+                $error_message = "Error uploading file.";
+            }
+        }
+
+        // Display error message if any
+        if (!empty($error_message)) {
+            echo "<p style='color: red;'>$error_message</p>";
+        }
+    }
+    ?>
+</body>
+</html>
