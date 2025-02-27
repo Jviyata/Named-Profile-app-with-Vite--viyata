@@ -12,6 +12,12 @@
             margin: 0;
             padding: 0;
             color: black;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode {
+            background-color: #1e1e1e;
+            color: white;
         }
 
         .navbar {
@@ -54,6 +60,11 @@
             width: 200px;
             text-align: center;
             display: none;
+        }
+
+        .dark-mode .profile-card {
+            background: #333;
+            color: white;
         }
 
         .profile-card img {
@@ -110,6 +121,23 @@
             border-radius: 4px;
             width: 30%;
         }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .dark-mode .dark-mode-toggle {
+            background-color: #ddd;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -117,6 +145,8 @@
     <div class="navbar">
         <h2>Profile App</h2>
     </div>
+
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
 
     <div class="container">
         <p>This is a simple profile app.</p>
@@ -208,7 +238,18 @@
             filterProfiles();
         }
 
-        window.onload = filterProfiles;
+        function toggleDarkMode() {
+            let body = document.body;
+            body.classList.toggle("dark-mode");
+            localStorage.setItem("darkMode", body.classList.contains("dark-mode"));
+        }
+
+        window.onload = function () {
+            filterProfiles();
+            if (localStorage.getItem("darkMode") === "true") {
+                document.body.classList.add("dark-mode");
+            }
+        };
     </script>
 
 </body>
