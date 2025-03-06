@@ -1,0 +1,55 @@
+import React, { useReducer, useRef, useLayoutEffect } from "react";
+
+// Reducer function to manage profile state
+const profileReducer = (state, action) => {
+  switch (action.type) {
+    case "UPDATE_NAME":
+      return { ...state, name: action.payload };
+    case "TOGGLE_EDIT":
+      return { ...state, isEditing: !state.isEditing };
+    default:
+      return state;
+  }
+};
+
+const Profile = () => {
+  const [profile, dispatch] = useReducer(profileReducer, {
+    name: "Viyata Ruta",
+    isEditing: false,
+  });
+
+  const cardRef = useRef(null);
+  const widthRef = useRef(0);
+
+  useLayoutEffect(() => {
+    if (cardRef.current) {
+      widthRef.current = cardRef.current.offsetWidth;
+      console.log("Card width:", widthRef.current);
+    }
+  }, [profile.isEditing]);
+
+  return (
+    <div ref={cardRef} className="p-4 border rounded shadow-lg w-64">
+      {profile.isEditing ? (
+        <input
+          type="text"
+          value={profile.name}
+          onChange={(e) =>
+            dispatch({ type: "UPDATE_NAME", payload: e.target.value })
+          }
+          className="border p-2 w-full"
+        />
+      ) : (
+        <h2 className="text-xl font-bold">{profile.name}</h2>
+      )}
+      <button
+        className="mt-2 p-2 bg-blue-500 text-white rounded"
+        onClick={() => dispatch({ type: "TOGGLE_EDIT" })}
+      >
+        {profile.isEditing ? "Save" : "Edit"}
+      </button>
+    </div>
+  );
+};
+
+export default Profile;
