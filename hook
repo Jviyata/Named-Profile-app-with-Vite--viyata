@@ -53,3 +53,8 @@ const Profile = () => {
 };
 
 export default Profile;
+
+/*
+Short Description:
+This implementation replaces useState with useReducer to manage the profile's state, making it more scalable. useRef is used to reference the profile card's DOM element and store its width. useLayoutEffect ensures the width is measured and logged before rendering updates, helping with layout adjustments.
+*/
