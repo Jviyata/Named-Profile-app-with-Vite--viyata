@@ -1,0 +1,97 @@
+import React, { useEffect } from "react";
+import { createStore } from "redux";
+import { Provider, useSelector, useDispatch } from "react-redux";
+
+// Redux Action Types
+const TOGGLE_MODE = "TOGGLE_MODE";
+
+// Redux Action Creators
+export const toggleMode = () => ({
+  type: TOGGLE_MODE
+});
+
+// Redux Reducer
+const initialState = {
+  mode: localStorage.getItem("themeMode") || "light"
+};
+
+const modeReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case TOGGLE_MODE:
+      return {
+        ...state,
+        mode: state.mode === "light" ? "dark" : "light"
+      };
+    default:
+      return state;
+  }
+};
+
+// Redux Store
+const store = createStore(modeReducer);
+
+// Custom Hook to replace useMode
+export const useMode = () => {
+  const mode = useSelector(state => state.mode);
+  const dispatch = useDispatch();
+  
+  const toggleMode = () => {
+    dispatch({ type: TOGGLE_MODE });
+  };
+  
+  return { mode, toggleMode };
+};
+
+// ThemeProvider component to replace ModeProvider
+export const ThemeProvider = ({ children }) => {
+  return (
+    <Provider store={store}>
+      <ThemeEffect>
+        <div className={`app ${store.getState().mode}`}>{children}</div>
+      </ThemeEffect>
+    </Provider>
+  );
+};
+
+// Side Effect Component
+const ThemeEffect = ({ children }) => {
+  const { mode } = useMode();
+  
+  useEffect(() => {
+    localStorage.setItem("themeMode", mode);
+    document.body.style.backgroundColor = mode === "light" ? "black" : "white";
+  }, [mode]);
+  
+  return children;
+};
+
+// Sample component using Redux
+const ThemeToggle = () => {
+  const { mode, toggleMode } = useMode();
+
+  return (
+    <button className="toggle-button" onClick={toggleMode}>
+      {mode === "light" ? "dark" : "light"}
+    </button>
+  );
+};
+
+// App component
+const App = () => {
+  return (
+    <ThemeProvider>
+      <div className="container">
+        <ThemeToggle />
+        <h1 style={{ color: mode === "light" ? "#333" : "#fff" }}>
+          Redux Theme Mode Example
+        </h1>
+        <p style={{ color: mode === "light" ? "#666" : "#ccc" }}>
+          This example demonstrates how to use Redux for theme mode management
+          instead of React Context API.
+        </p>
+      </div>
+    </ThemeProvider>
+  );
+};
+
+export default App;
